@@ -1,0 +1,20 @@
+export type SongType = {
+  song_id: string;
+  ranking: number;
+  artist: string;
+  album: string;
+  title: string;
+  setting: string;
+  lyric_1: string;
+  lyric_2: string;
+  lyric_3: string;
+  lyric_1_image_1: string;
+  lyric_1_image_2: string;
+  lyric_1_image_3: string;
+  lyric_2_image_1: string;
+  lyric_2_image_2: string;
+  lyric_2_image_3: string;
+  lyric_3_image_1: string;
+  lyric_3_image_2: string;
+  lyric_3_image_3: string;
+};
