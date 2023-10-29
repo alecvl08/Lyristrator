@@ -44,7 +44,7 @@ const SongComponent: React.FC<SongProps> = ({ song }) => {
           <p style={settingStyle}><strong>Setting: </strong>{song.setting}</p>
         </div>
         {/* Three lyrics carousels */}
-        <div className="col-md-3">
+        <div className="col-md-3 mt-3">
           <LyricImagesCarousel 
             ranking={song.ranking}
             lyric_num={1}
@@ -55,7 +55,7 @@ const SongComponent: React.FC<SongProps> = ({ song }) => {
             scroll_interval={getRandomScrollInterval()}
           ></LyricImagesCarousel>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-3 mt-3">
           <LyricImagesCarousel 
             ranking={song.ranking}
             lyric_num={2}
@@ -66,7 +66,7 @@ const SongComponent: React.FC<SongProps> = ({ song }) => {
             scroll_interval={getRandomScrollInterval()}
           ></LyricImagesCarousel>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-3 mt-3">
           <LyricImagesCarousel 
             ranking={song.ranking}
             lyric_num={3}
