@@ -42,7 +42,7 @@ def update_song_images(song_id, idx, image_values, postgres_hook):
         params = (image_value, song_id)
         postgres_hook.run(update_sql, parameters=params)
 
-@dag(schedule_interval='0 0 * * *', start_date=days_ago(2), catchup=False)
+@dag(schedule_interval='0 0,6,12,18 * * *', start_date=days_ago(2), catchup=False)
 def spotify_lyrics_dag():
 
     @task
@@ -202,7 +202,7 @@ def spotify_lyrics_dag():
         
         # Step 4 - generate images for each lyric using the OpenAI Image Generations API
         # First fetch songs with populated setting and lyrics columns
-        sql = """
+        sql = f"""
             SELECT id, setting, lyric_1, lyric_2, lyric_3
             FROM songs
             WHERE
@@ -219,7 +219,16 @@ def spotify_lyrics_dag():
                     lyric_2_image_3 IS NULL OR
                     lyric_3_image_1 IS NULL OR
                     lyric_3_image_2 IS NULL OR
-                    lyric_3_image_3 IS NULL
+                    lyric_3_image_3 IS NULL OR
+                    lyric_1_image_1 = 'https://{bucket_name}.s3.amazonaws.com/Image_Not_Available.png' OR
+                    lyric_1_image_2 = 'https://{bucket_name}.s3.amazonaws.com/Image_Not_Available.png' OR
+                    lyric_1_image_3 = 'https://{bucket_name}.s3.amazonaws.com/Image_Not_Available.png' OR
+                    lyric_2_image_1 = 'https://{bucket_name}.s3.amazonaws.com/Image_Not_Available.png' OR
+                    lyric_2_image_2 = 'https://{bucket_name}.s3.amazonaws.com/Image_Not_Available.png' OR
+                    lyric_2_image_3 = 'https://{bucket_name}.s3.amazonaws.com/Image_Not_Available.png' OR
+                    lyric_3_image_1 = 'https://{bucket_name}.s3.amazonaws.com/Image_Not_Available.png' OR
+                    lyric_3_image_2 = 'https://{bucket_name}.s3.amazonaws.com/Image_Not_Available.png' OR
+                    lyric_3_image_3 = 'https://{bucket_name}.s3.amazonaws.com/Image_Not_Available.png'
                 );
         """
         songs = postgres_hook.get_records(sql)
@@ -241,6 +250,8 @@ def spotify_lyrics_dag():
                 }
                 response = requests.post(image_generations_endpoint, headers=headers, json=payload)
                 response_data = response.json()
+
+                print(response.json())
 
                 # Insert images to S3 bucket, manage special cases
                 if response.status_code == 200:
