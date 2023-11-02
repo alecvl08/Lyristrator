@@ -275,5 +275,8 @@ def spotify_lyrics_dag():
                     update_song_images(song_id, idx, image_values, postgres_hook)
         
     get_popular_songs_with_lyrics()
+    # OpenAI images rate limit is 50 images per minute, max for this app is 90, so call the function twice to bypass
+    time.sleep(300)
+    get_popular_songs_with_lyrics()
 
 dag_instance = spotify_lyrics_dag()
