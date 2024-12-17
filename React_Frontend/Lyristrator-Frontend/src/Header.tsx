@@ -22,6 +22,7 @@ const Header: React.FC = () => {
     <div style={headerStyle}>
       <h1 style={titleStyle}>Lyristrator: AI-powered lyrics illustrator</h1>
       <p style={subtitleStyle}>How good is AI at illustrating popular song lyrics?</p>
+      <p style={subtitleStyle}><strong>Attention: This page is no longer being updated due to changes to Spotify's Web API. See here for details: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api</strong></p>
       <button type="button" className="btn btn-light" data-bs-toggle="modal" data-bs-target="#methodologyModal">
         Methodology
       </button>
